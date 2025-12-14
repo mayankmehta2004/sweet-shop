@@ -46,25 +46,28 @@ The application supports **role-based access** for admins and users, enabling in
 ---
 
 ## Project Structure
+
+```text
 sweet-shop/
 ├── backend/
-│ ├── src/
-│ │ ├── middleware/ # Authentication middleware
-│ │ ├── routes/ # Auth and sweets routes
-│ │ ├── tests/ # Jest & Supertest API tests
-│ │ │ ├── auth.test.js
-│ │ │ └── sweets.test.js
-│ │ ├── app.js # Express app configuration
-│ │ ├── db.js # SQLite database setup
-│ │ └── server.js # Server entry point
-│ ├── sweetshop.db # SQLite database
-│ └── package.json
+│   ├── src/
+│   │   ├── middleware/        # Authentication middleware
+│   │   ├── routes/            # Auth and sweets routes
+│   │   ├── tests/             # Jest & Supertest API tests
+│   │   │   ├── auth.test.js
+│   │   │   └── sweets.test.js
+│   │   ├── app.js             # Express app configuration
+│   │   ├── db.js              # SQLite database setup
+│   │   └── server.js          # Server entry point
+│   ├── sweetshop.db           # SQLite database
+│   └── package.json
 ├── frontend/
-│ └── sweetshop/
-│ ├── src/
-│ │ └── App.js # Main React application
-│ └── package.json
+│   └── sweetshop/
+│       ├── src/
+│       │   └── App.js         # Main React application
+│       └── package.json
 └── README.md
+```
 
 
 ---
@@ -81,3 +84,41 @@ Run tests using:
 ```bash
 cd backend
 npm test
+```
+## Testing:
+
+  <img width="894" height="475" alt="image" src="https://github.com/user-attachments/assets/d62204db-04bb-4b02-afe8-6c0442efa4f1" />
+
+Run Backend using :
+
+```bash
+cd backend
+node src/server.js
+```
+
+Run Frontend using:
+
+```bash
+cd frontend/sweetshop
+npm start
+```
+
+## Login Screen
+
+<img width="1296" height="1170" alt="image" src="https://github.com/user-attachments/assets/6d6323e9-f234-4c12-882b-4cd93090c84f" />
+
+---
+
+## Admin Console
+
+<img width="1222" height="1857" alt="image" src="https://github.com/user-attachments/assets/637496ca-791b-4f9e-822f-a0ed08b6181f" />
+
+---
+
+## User Console
+
+<img width="1253" height="1764" alt="image" src="https://github.com/user-attachments/assets/837fdadf-7eb7-4298-84bb-4bfbc4533f18" />
+
+
+
+
