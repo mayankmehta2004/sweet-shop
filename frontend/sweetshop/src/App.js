@@ -1,5 +1,21 @@
 import { useEffect, useState } from "react";
 
+const page = {
+  minHeight: "100vh",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  background: "#f5f7fa"
+};
+
+const appCard = {
+  width: 520,
+  background: "#fff",
+  padding: 30,
+  borderRadius: 12,
+  boxShadow: "0 12px 30px rgba(0,0,0,0.1)"
+};
+
 const box = {
   border: "1px solid #ddd",
   padding: 15,
@@ -7,7 +23,36 @@ const box = {
   borderRadius: 6
 };
 
-const btn = {
+const inputStyle = {
+  width: "100%",
+  padding: "10px",
+  marginBottom: 12,
+  borderRadius: 6,
+  border: "1px solid #ccc",
+  fontSize: 14
+};
+
+const primaryBtn = {
+  width: "100%",
+  padding: "10px",
+  background: "#2563eb",
+  color: "#fff",
+  border: "none",
+  borderRadius: 6,
+  fontSize: 15,
+  cursor: "pointer"
+};
+
+const secondaryBtn = {
+  marginTop: 10,
+  width: "100%",
+  background: "none",
+  border: "none",
+  color: "#2563eb",
+  cursor: "pointer"
+};
+
+const smallBtn = {
   marginRight: 6,
   padding: "4px 8px",
   cursor: "pointer"
@@ -20,7 +65,6 @@ function App() {
   const [role, setRole] = useState("");
 
   const [sweets, setSweets] = useState([]);
-
   const [mode, setMode] = useState("login");
   const [error, setError] = useState("");
 
@@ -179,119 +223,124 @@ function App() {
   };
 
   return (
-    <div style={{ padding: 20, maxWidth: 520 }}>
-      <h1>Sweet Shop Management System</h1>
+    <div style={page}>
+      <div style={appCard}>
+        <h1 style={{ textAlign: "center", marginBottom: 5 }}>Sweet Shop</h1>
+        <p style={{ textAlign: "center", color: "#666", marginBottom: 25 }}>
+          Management System
+        </p>
 
-      {message && (
-        <div
-          style={{
-            padding: 10,
-            marginBottom: 10,
-            borderRadius: 5,
-            background: messageType === "error" ? "#ffe6e6" : "#e6fffa"
-          }}
-        >
-          {message}
-        </div>
-      )}
-
-      {!token && (
-        <div style={box}>
-          <h3>{mode === "login" ? "Login" : "Register"}</h3>
-
-          <input
-            placeholder="Username"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-          />
-          <br /><br />
-
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          />
-          <br /><br />
-
-          {mode === "login" ? (
-            <button style={btn} onClick={login}>Login</button>
-          ) : (
-            <button style={btn} onClick={register}>Register</button>
-          )}
-
-          <button onClick={() => setMode(mode === "login" ? "register" : "login")}>
-            Switch to {mode === "login" ? "Register" : "Login"}
-          </button>
-
-          {error && <p style={{ color: "red" }}>{error}</p>}
-        </div>
-      )}
-
-      {token && (
-        <>
-          <div style={box}>
-            <p>Logged in as <b>{role}</b></p>
-            <button onClick={logout}>Logout</button>
+        {message && (
+          <div
+            style={{
+              padding: 10,
+              marginBottom: 15,
+              borderRadius: 6,
+              background: messageType === "error" ? "#ffe6e6" : "#e6fffa"
+            }}
+          >
+            {message}
           </div>
+        )}
 
+        {!token && (
           <div style={box}>
-            <h3>Search Sweets</h3>
-            <input placeholder="Name" onChange={e => setSearch({ ...search, name: e.target.value })} />
-            <input placeholder="Category" onChange={e => setSearch({ ...search, category: e.target.value })} />
-            <input placeholder="Min Price" type="number" onChange={e => setSearch({ ...search, minPrice: e.target.value })} />
-            <input placeholder="Max Price" type="number" onChange={e => setSearch({ ...search, maxPrice: e.target.value })} />
-            <br /><br />
-            <button style={btn} onClick={searchSweets}>Search</button>
-            <button onClick={fetchSweets}>Clear</button>
-          </div>
+            <h3>{mode === "login" ? "Login" : "Register"}</h3>
 
-          {role === "admin" && (
+            <input
+              style={inputStyle}
+              placeholder="Username"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+            />
+
+            <input
+              style={inputStyle}
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+            />
+
+            {mode === "login" ? (
+              <button style={primaryBtn} onClick={login}>Login</button>
+            ) : (
+              <button style={primaryBtn} onClick={register}>Register</button>
+            )}
+
+            <button
+              style={secondaryBtn}
+              onClick={() => setMode(mode === "login" ? "register" : "login")}
+            >
+              Switch to {mode === "login" ? "Register" : "Login"}
+            </button>
+
+            {error && <p style={{ color: "red" }}>{error}</p>}
+          </div>
+        )}
+
+        {token && (
+          <>
             <div style={box}>
-              <h3>Add Sweet</h3>
-              <input placeholder="Name" onChange={e => setNewSweet({ ...newSweet, name: e.target.value })} />
-              <input placeholder="Category" onChange={e => setNewSweet({ ...newSweet, category: e.target.value })} />
-              <input placeholder="Price" type="number" onChange={e => setNewSweet({ ...newSweet, price: e.target.value })} />
-              <input placeholder="Quantity" type="number" onChange={e => setNewSweet({ ...newSweet, quantity: e.target.value })} />
-              <br /><br />
-              <button onClick={addSweet}>Add Sweet</button>
+              <p>Logged in as <b>{role}</b></p>
+              <button onClick={logout}>Logout</button>
             </div>
-          )}
 
-          <h3>Sweets</h3>
+            <div style={box}>
+              <h3>Search Sweets</h3>
+              <input style={inputStyle} placeholder="Name" onChange={e => setSearch({ ...search, name: e.target.value })} />
+              <input style={inputStyle} placeholder="Category" onChange={e => setSearch({ ...search, category: e.target.value })} />
+              <input style={inputStyle} placeholder="Min Price" type="number" onChange={e => setSearch({ ...search, minPrice: e.target.value })} />
+              <input style={inputStyle} placeholder="Max Price" type="number" onChange={e => setSearch({ ...search, maxPrice: e.target.value })} />
+              <button style={smallBtn} onClick={searchSweets}>Search</button>
+              <button onClick={fetchSweets}>Clear</button>
+            </div>
 
-          {sweets.length === 0 ? (
-            <p>No sweets found.</p>
-          ) : (
-            sweets.map(s => (
-              <div key={s.id} style={box}>
-                <b>{s.name}</b>
-                <p>Category: {s.category}</p>
-                <p>Price: ₹{s.price}</p>
-                <p>Available: {s.quantity}</p>
-
-                {role === "user" && (
-                  <button
-                    style={{ ...btn, opacity: s.quantity === 0 ? 0.5 : 1 }}
-                    onClick={() => purchase(s.id)}
-                    disabled={s.quantity === 0}
-                    title={s.quantity === 0 ? "Out of stock" : "Buy sweet"}
-                  >
-                    Purchase
-                  </button>
-                )}
-
-                {role === "admin" && (
-                  <>
-                    <button style={btn} onClick={() => restock(s.id)}>Restock</button>
-                    <button onClick={() => deleteSweet(s.id)}>Delete</button>
-                  </>
-                )}
+            {role === "admin" && (
+              <div style={box}>
+                <h3>Add Sweet</h3>
+                <input style={inputStyle} placeholder="Name" onChange={e => setNewSweet({ ...newSweet, name: e.target.value })} />
+                <input style={inputStyle} placeholder="Category" onChange={e => setNewSweet({ ...newSweet, category: e.target.value })} />
+                <input style={inputStyle} placeholder="Price" type="number" onChange={e => setNewSweet({ ...newSweet, price: e.target.value })} />
+                <input style={inputStyle} placeholder="Quantity" type="number" onChange={e => setNewSweet({ ...newSweet, quantity: e.target.value })} />
+                <button onClick={addSweet}>Add Sweet</button>
               </div>
-            ))
-          )}
-        </>
-      )}
+            )}
+
+            <h3>Sweets</h3>
+
+            {sweets.length === 0 ? (
+              <p>No sweets found.</p>
+            ) : (
+              sweets.map(s => (
+                <div key={s.id} style={box}>
+                  <b>{s.name}</b>
+                  <p>Category: {s.category}</p>
+                  <p>Price: ₹{s.price}</p>
+                  <p>Available: {s.quantity}</p>
+
+                  {role === "user" && (
+                    <button
+                      style={{ ...smallBtn, opacity: s.quantity === 0 ? 0.5 : 1 }}
+                      onClick={() => purchase(s.id)}
+                      disabled={s.quantity === 0}
+                    >
+                      Purchase
+                    </button>
+                  )}
+
+                  {role === "admin" && (
+                    <>
+                      <button style={smallBtn} onClick={() => restock(s.id)}>Restock</button>
+                      <button onClick={() => deleteSweet(s.id)}>Delete</button>
+                    </>
+                  )}
+                </div>
+              ))
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }
