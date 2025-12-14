@@ -9,26 +9,26 @@ describe("Sweets API", () => {
   beforeAll(async () => {
     await request(app)
       .post("/api/auth/register")
-      .send({ username: "admin_test", password: "1234", role: "admin" });
+      .send({ username: "admin_test_1", password: "1234", role: "admin" });
 
     await request(app)
       .post("/api/auth/register")
-      .send({ username: "user_test", password: "1234", role: "user" });
+      .send({ username: "user_test_1", password: "1234", role: "user" });
 
-    const adminRes = await request(app)
+    const adminLogin = await request(app)
       .post("/api/auth/login")
-      .send({ username: "admin_test", password: "1234" });
+      .send({ username: "admin_test_1", password: "1234" });
 
-    adminToken = adminRes.body.token;
+    adminToken = adminLogin.body.token;
 
-    const userRes = await request(app)
+    const userLogin = await request(app)
       .post("/api/auth/login")
-      .send({ username: "user_test", password: "1234" });
+      .send({ username: "user_test_1", password: "1234" });
 
-    userToken = userRes.body.token;
+    userToken = userLogin.body.token;
   });
 
-  it("admin should be able to add a sweet", async () => {
+  it("admin can add a sweet", async () => {
     const res = await request(app)
       .post("/api/sweets")
       .set("Authorization", adminToken)
@@ -45,7 +45,7 @@ describe("Sweets API", () => {
     sweetId = res.body.id;
   });
 
-  it("should fetch list of sweets", async () => {
+  it("can fetch sweets list", async () => {
     const res = await request(app)
       .get("/api/sweets")
       .set("Authorization", userToken);
@@ -54,7 +54,7 @@ describe("Sweets API", () => {
     expect(Array.isArray(res.body)).toBe(true);
   });
 
-  it("user should be able to purchase a sweet", async () => {
+  it("user can purchase a sweet", async () => {
     const res = await request(app)
       .post(`/api/sweets/${sweetId}/purchase`)
       .set("Authorization", userToken);
@@ -63,7 +63,7 @@ describe("Sweets API", () => {
     expect(res.body.success).toBe(true);
   });
 
-  it("should not allow purchase when sweet is out of stock", async () => {
+  it("cannot purchase sweet when out of stock", async () => {
     await request(app)
       .post(`/api/sweets/${sweetId}/purchase`)
       .set("Authorization", userToken);
