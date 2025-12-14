@@ -37,7 +37,8 @@ router.post("/login", (req, res) => {
         "secretkey"
       );
 
-      res.json({ token });
+      res.json({ token,
+  role: user.role });
     }
   );
 });
